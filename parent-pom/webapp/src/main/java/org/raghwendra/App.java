@@ -1,11 +1,5 @@
 package org.raghwendra;
 
-import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.auth.credentials.AwsCredentials;
-import software.amazon.awssdk.auth.credentials.*;
-
-
 /**
  * Hello world!
  *
@@ -14,19 +8,23 @@ public class App
 {
     public static void main( String[] args )
     {
-    	if(args.length != 2) {
-    		System.out.println("please provide access_key_id and secret_key_id");
+    	if(args.length != 3) {
+    		System.out.println("please provide access_key_id and secret_key_id and new user to be created");
     		System.exit(1);
     	}
         String accessKeyId = args[0];
         String secretKeyId = args[1];
+        String userName = args[2];
 
-        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKeyId, secretKeyId);
-        
-        Region region = Region.US_WEST_2;
-        S3Client s3 = S3Client.builder()
-        				.credentialsProvider(StaticCredentialsProvider.create(awsCreds))
-        				.region(region)
-        				.build();
+        // AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKeyId, secretKeyId);
+        IAMExample iamExample = new IAMExample(accessKeyId, secretKeyId);
+        // create new user
+        //String resp = iamExample.createUser(userName);
+
+        // attach user to group
+        System.out.println(iamExample.attachPolicy(userName, "TestGroup"));
+
+
+
     }
 }
