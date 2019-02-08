@@ -20,6 +20,7 @@
     <module>core</module>
     <module>service</module>
     <module>webapp</module>
+    <module>iam-layer</module>
   </modules>
 
   <build>
