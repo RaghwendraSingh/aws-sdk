@@ -10,22 +10,25 @@ import software.amazon.awssdk.services.iam.model.CreateUserRequest;
 import software.amazon.awssdk.services.iam.model.CreateUserResponse;
 
 public class IAMExample {
-    public IamClient iam;
+    public IamClient iam; // make this static
+    public Region region = Region.AWS_GLOBAL;
     public IAMExample(AwsBasicCredentials creds) {
-        iam = IamClient.builder().credentialsProvider(StaticCredentialsProvider.create(creds)).build();
+        iam = IamClient.builder()
+                .credentialsProvider(StaticCredentialsProvider.create(creds))
+                .region(region).build();
     }
     public String createUser(String userName) {
-        AwsBasicCredentials.create("", "");
-        Region region = Region.AWS_GLOBAL;
-        IamClient iam = IamClient.builder().region(region).build();
+        //AwsBasicCredentials.create("", "");
+        //Region region = Region.AWS_GLOBAL;
+        //IamClient iam = IamClient.builder().region(region).build();
 
         CreateUserRequest createUserRequest = CreateUserRequest.builder()
                 .userName(userName).build();
 
         CreateUserResponse response = iam.createUser(createUserRequest);
 
-        System.out.println(response.user().userName());
+        System.out.println(response.toString());
 
-        return null;
+        return response.toString();
     }
 }
